@@ -1,0 +1,19 @@
+version: "3.6"
+services:
+  db:
+    image: postgres:14.2
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+    ports:
+    - "5432:5432"
+    
+  weather-monitor:
+    depends_on:
+    - db
+    build:
+      context: .
+    environment:
+      ASPNETCORE_URLS: "http://+:5003"
+    ports:
+    - "5003:5003"
