@@ -1,12 +1,14 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
+#
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeatherMonitor", "WeatherMonitor\WeatherMonitor.csproj", "{54972015-E6D0-4325-AA21-17346EE6D040}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionFolder", "SolutionFolder", "{319783BF-AD0D-44F1-9560-DAE504BE6D79}"
 	ProjectSection(SolutionItems) = preProject
 		docker-compose.yaml = docker-compose.yaml
-		Dockerfile = Dockerfile
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleClient", "ConsoleClient\ConsoleClient.csproj", "{6209BA49-902B-4445-94F9-AA38F1F637F9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -18,5 +20,9 @@ Global
 		{54972015-E6D0-4325-AA21-17346EE6D040}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{54972015-E6D0-4325-AA21-17346EE6D040}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{54972015-E6D0-4325-AA21-17346EE6D040}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6209BA49-902B-4445-94F9-AA38F1F637F9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6209BA49-902B-4445-94F9-AA38F1F637F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6209BA49-902B-4445-94F9-AA38F1F637F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6209BA49-902B-4445-94F9-AA38F1F637F9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

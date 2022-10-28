@@ -21,7 +21,7 @@ class WeatherApiClient : IWeatherApiClient
         return Cache.GetOrCreate(city, entry =>
         {
             entry.AbsoluteExpirationRelativeToNow = TimeSpan.FromSeconds(5);
-            return new Weather(
+            return new Weather(city,
                 Random.Shared.Next(-10, 45),
                 WindOptions[Random.Shared.Next(1000) % WindOptions.Length]);
         });

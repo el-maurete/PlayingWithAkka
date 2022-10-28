@@ -77,7 +77,7 @@ public class WeatherActor : ReceivePersistentActor
     private void CheckTheWeather(object _)
     {
         var weather = _client.Get(PersistenceId);
-        Log.Info("Weather is {0}", weather);
+        Log.Info("{0}", weather);
         var badWeather = weather.WindLevel == WindLevel.Stormy;
         if (badWeather)
         {

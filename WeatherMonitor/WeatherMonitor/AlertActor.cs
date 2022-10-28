@@ -1,18 +1,17 @@
 ﻿using Akka.Actor;
 using Akka.Event;
+using Microsoft.AspNetCore.SignalR;
 
 namespace WeatherMonitor;
 
 public class AlertActor : ReceiveActor
 {
-    public AlertActor(string city)
+    public AlertActor(string city, IHubContext<WeatherHub> hub)
     {
         Receive<AlertStarted>(_ =>
         {
-            var log = Context.GetLogger();
-            // Pretend doing something
-            Thread.Sleep(1000);
-            log.Warning("DING DING DING!");
+            Context.GetLogger().Info("Sending alert via SignalR");
+            hub.Clients.All.SendAsync("NotifyAlert", city);
             Context.Parent.Tell(new AlertNotified(city));
             Self.GracefulStop(TimeSpan.FromSeconds(1));
         });

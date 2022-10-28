@@ -2,7 +2,7 @@
 
 public enum WindLevel { Calm, Breezy, Stormy }
 
-public record Weather(int Temperature, WindLevel WindLevel)
+public record Weather(string City, int Temperature, WindLevel WindLevel)
 {
     public override string ToString() => $"{Temperature}' and {WindLevel}";
 };
