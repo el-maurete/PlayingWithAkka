@@ -1,8 +1,9 @@
 ﻿using Akka.Actor;
 using Akka.Persistence;
 using Akka.Util.Internal;
+using WeatherMonitor.Shared;
 
-namespace WeatherMonitor;
+namespace WeatherMonitor.Engine;
 
 public class WeatherSupervisorActor : ReceivePersistentActor
 {

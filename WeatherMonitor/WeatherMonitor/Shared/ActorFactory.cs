@@ -1,7 +1,7 @@
 ﻿using Akka.Actor;
 using Akka.DependencyInjection;
 
-namespace WeatherMonitor;
+namespace WeatherMonitor.Shared;
 
 public interface IActorFactory<T> where T : ActorBase
 {

@@ -1,10 +1,13 @@
-﻿using Akka.Actor;
-using Akka.DependencyInjection;
+﻿using Akka.DependencyInjection;
 using Akka.Hosting;
-using Akka.Pattern;
 using Akka.Persistence.Hosting;
 using Akka.Persistence.PostgreSql;
 using Akka.Persistence.PostgreSql.Hosting;
+using Akka.Persistence.Query;
+using Akka.Persistence.Query.Sql;
+using WeatherMonitor.Engine;
+using WeatherMonitor.Queries;
+using WeatherMonitor.Shared;
 
 namespace WeatherMonitor;
 
@@ -27,22 +30,20 @@ public static class Bootstrap
 
             builder.WithActors((system, registry) =>
             {
+                var allEvents = PersistenceQuery.Get(system)
+                    .ReadJournalFor<SqlReadJournal>(SqlReadJournal.Identifier);
+                
                 registry.TryRegister<WeatherSupervisorActor>(
                     system.ActorOf(DependencyResolver.For(system).Props<WeatherSupervisorActor>(),
                         "weathers"));
+
+                registry.TryRegister<QueryActor>(
+                    system.ActorOf(DependencyResolver.For(system).Props<QueryActor>(allEvents),
+                        "read-model"));
             });
         });
         return services;
     }
-
-    private static Props BuildBackoffSupervisorProps(Props childProps, string childName)
-        => BackoffSupervisor.Props(Backoff.OnFailure(
-            childProps,
-            childName,
-            TimeSpan.FromSeconds(3),
-            TimeSpan.FromSeconds(30),
-            0.2,
-            10));
 
     private static string DbConnectionString(IConfiguration configuration) =>
         $"Host={configuration.GetValue<string>("DbHost")};" +

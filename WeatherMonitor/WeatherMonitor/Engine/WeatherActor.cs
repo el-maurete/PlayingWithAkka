@@ -1,7 +1,8 @@
 ﻿using Akka.Actor;
 using Akka.Persistence;
+using WeatherMonitor.Shared;
 
-namespace WeatherMonitor;
+namespace WeatherMonitor.Engine;
 
 public class WeatherActor : ReceivePersistentActor
 {
@@ -65,8 +66,26 @@ public class WeatherActor : ReceivePersistentActor
         Command<ReceiveTimeout>(CheckTheWeather);
         Command<StopAlert>(
             _ => Persist(new AlertStopped(_id),
+                _ => Become(Unalerting)));
+    }
+    
+    private void Unalerting()
+    {
+        _state = Unalerting;
+        Log.Info("Current status: Cancelling alert");
+        SendAlert();
+
+        Command<ReceiveTimeout>(_ =>
+        {
+            Log.Info("Previous attempt timed out. Retrying sending the alert...");
+            SendAlert();
+        });
+
+        Command<AlertNotified>(
+            x => Persist(x,
                 _ => Become(Calm)));
     }
+
 
     private void SendAlert()
     {

@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Caching.Memory;
 
-namespace WeatherMonitor;
+namespace WeatherMonitor.Engine;
 
 public interface IWeatherApiClient
 {

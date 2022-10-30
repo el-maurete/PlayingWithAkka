@@ -1,4 +1,4 @@
-﻿namespace WeatherMonitor;
+﻿namespace WeatherMonitor.Engine;
 
 public enum WindLevel { Calm, Breezy, Stormy }
 

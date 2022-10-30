@@ -1,5 +1,6 @@
 using Prometheus;
 using WeatherMonitor;
+using WeatherMonitor.Engine;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();

@@ -2,7 +2,7 @@
 using Akka.Hosting;
 using Microsoft.AspNetCore.SignalR;
 
-namespace WeatherMonitor;
+namespace WeatherMonitor.Engine;
 
 public class WeatherHub : Hub
 {
