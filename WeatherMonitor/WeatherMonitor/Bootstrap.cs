@@ -24,7 +24,7 @@ public static class Bootstrap
                 PersistenceMode.Both,
                 autoInitialize: true,
                 schemaName: "public",
-                storedAsType: StoredAsType.JsonB,
+                storedAsType: StoredAsType.ByteA,
                 sequentialAccess: false,
                 useBigintIdentityForOrderingColumn: true);
 

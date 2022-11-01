@@ -12,8 +12,8 @@ connection.Reconnected += _ => Task.Run(() => Console.WriteLine("Reconnected!"))
 
 connection.On<string, bool>("NotifyAlert", (city, onAlert) =>
     Console.WriteLine(onAlert
-        ? $"{city}: Alert is over."
-        : $"{city}: DING DING DING DING!!!"));
+        ? $"{city}: DING DING DING DING!!!"
+        : $"{city}: Alert is over."));
 
 for (var attempt = 0; attempt < 10; attempt++)
 {

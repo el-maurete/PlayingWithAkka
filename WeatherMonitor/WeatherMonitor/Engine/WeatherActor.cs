@@ -21,9 +21,8 @@ public class WeatherActor : ReceivePersistentActor
         _state = Calm;
 
         Recover<AlertStarted>(_ => _state = Alerting);
-        Recover<AlertNotified>(_ => _state = OnAlert);
-        Recover<AlertStopped>(_ => _state = Calm);
-        
+        Recover<AlertStopped>(_ => _state = Unalerting);
+        Recover<AlertNotified>(_ => _state = _state == Alerting ? OnAlert : Calm);
         Recover<RecoveryCompleted>(_ => Become(_state));
         
         Context.SetReceiveTimeout(TimeSpan.FromSeconds(3));
@@ -44,14 +43,16 @@ public class WeatherActor : ReceivePersistentActor
 
     private void Alerting()
     {
+        void Send() => _alertActorFactory.Build(Context, _id + "-alarm").Tell(new AlertStarted(_id));
+        
         _state = Alerting;
         Log.Info("Current status: Sending alert");
-        SendAlert();
+        Send();
 
         Command<ReceiveTimeout>(_ =>
         {
             Log.Info("Previous attempt timed out. Retrying sending the alert...");
-            SendAlert();
+            Send();
         });
 
         Command<AlertNotified>(
@@ -71,26 +72,21 @@ public class WeatherActor : ReceivePersistentActor
     
     private void Unalerting()
     {
+        void Send() => _alertActorFactory.Build(Context, _id + "-alarm").Tell(new AlertStopped(_id));
+
         _state = Unalerting;
         Log.Info("Current status: Cancelling alert");
-        SendAlert();
-
+        Send();
+        
         Command<ReceiveTimeout>(_ =>
         {
             Log.Info("Previous attempt timed out. Retrying sending the alert...");
-            SendAlert();
+            Send();
         });
 
         Command<AlertNotified>(
             x => Persist(x,
                 _ => Become(Calm)));
-    }
-
-
-    private void SendAlert()
-    {
-        var child = _alertActorFactory.Build(Context, _id + "-alarm");
-        child.Tell(new AlertStarted(_id));
     }
 
     private void CheckTheWeather(object _)
