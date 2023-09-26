@@ -1,0 +1,5 @@
+groups:
+  - name: example
+    rules:
+      - record: total_akka_message_received
+        expr: sum by () (akka_message_received)

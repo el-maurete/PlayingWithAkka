@@ -1,0 +1,51 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Todo.Api", "Todo.Api\Todo.Api.csproj", "{5F7B3CD1-737F-4D64-BE58-6C6546520A4A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docker", "Docker", "{2E4F76EC-638B-4FF5-BA27-17AE6B1BA91A}"
+	ProjectSection(SolutionItems) = preProject
+		docker-compose.yaml = docker-compose.yaml
+		Api.Dockerfile = Api.Dockerfile
+		UI.Dockerfile = UI.Dockerfile
+		nginx.conf = nginx.conf
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Grafana", "Grafana", "{2B7F98AD-DB3F-4356-B06B-0740050E99C3}"
+	ProjectSection(SolutionItems) = preProject
+		grafana\Dashboards.yaml = grafana\Dashboards.yaml
+		grafana\Datasource.yaml = grafana\Datasource.yaml
+		grafana\Dockerfile = grafana\Dockerfile
+		grafana\dashboards\default.json = grafana\dashboards\default.json
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Prometheus", "Prometheus", "{78F22813-1B38-42A1-BA9F-F70A554E029B}"
+	ProjectSection(SolutionItems) = preProject
+		prometheus\Dockerfile = prometheus\Dockerfile
+		prometheus\prometheus.yml = prometheus\prometheus.yml
+		prometheus\rules.yml = prometheus\rules.yml
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Todo.Core", "Todo.Core\Todo.Core.csproj", "{A7CD101A-A255-4946-99D6-D9D59AB533E1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Todo.UI", "Todo.UI\Todo.UI.csproj", "{48E34309-734A-495C-8EF0-A5E706F8E0C0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5F7B3CD1-737F-4D64-BE58-6C6546520A4A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F7B3CD1-737F-4D64-BE58-6C6546520A4A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5F7B3CD1-737F-4D64-BE58-6C6546520A4A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5F7B3CD1-737F-4D64-BE58-6C6546520A4A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A7CD101A-A255-4946-99D6-D9D59AB533E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A7CD101A-A255-4946-99D6-D9D59AB533E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A7CD101A-A255-4946-99D6-D9D59AB533E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A7CD101A-A255-4946-99D6-D9D59AB533E1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{48E34309-734A-495C-8EF0-A5E706F8E0C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{48E34309-734A-495C-8EF0-A5E706F8E0C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{48E34309-734A-495C-8EF0-A5E706F8E0C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{48E34309-734A-495C-8EF0-A5E706F8E0C0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

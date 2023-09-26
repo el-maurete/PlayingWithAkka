@@ -1,0 +1,79 @@
+version: "3.6"
+
+services: 
+  prometheus:
+    build:
+      context: ./prometheus
+    ports:
+      - "9090:9090"
+        
+  grafana:
+    depends_on:
+      - prometheus
+    build:
+      context: ./grafana
+    environment:
+      GF_AUTH_ANONYMOUS_ENABLED: true
+    ports:
+      - "3000:3000"
+  
+  db:
+    image: postgres:14.2
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+    ports:
+      - "5432:5432"
+  
+  ui:
+    depends_on:
+      - main
+    build:
+      context: .
+      dockerfile: UI.Dockerfile
+    image: todo_ui:latest
+    ports:
+      - "8080:80"
+
+  main:
+    depends_on:
+      - db
+    build:
+      context: .
+      dockerfile: Api.Dockerfile
+    image: todo_api:latest
+    command:
+      - "dotnet"
+      - "Todo.Host.dll"
+    environment:
+      ASPNETCORE_URLS: "http://+:5000"
+      TODO_DbHost: "db"
+      TODO_SeedHost: "main"
+      TODO_Host: "main"
+      TODO_Port: "8110"
+    ports:
+      - "5000:5000"
+      - "8110:8110"
+        
+  worker_1:
+    depends_on: 
+      - main
+    image: todo_api:latest
+    command:
+      - "dotnet"
+      - "Todo.Host.dll"
+    environment:
+      ASPNETCORE_URLS: "http://+:5000"
+      TODO_DbHost: "db"
+      TODO_SeedHost: "main"
+      TODO_Host: "worker_1"
+      TODO_Port: "8111"
+    ports:
+      - "5001:5000"
+      - "8111:8111"
+
+#networks:
+#  default:
+#    ipam:
+#      driver: default
+#      

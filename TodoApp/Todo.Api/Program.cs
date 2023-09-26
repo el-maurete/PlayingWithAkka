@@ -1,0 +1,24 @@
+using Akka.HealthCheck.Hosting.Web;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Microsoft.AspNetCore.Rewrite;
+using Prometheus;
+using Todo.Api;
+using Todo.Api.Health;
+
+var builder = WebApplication.CreateBuilder(args);
+builder.Configuration.AddEnvironmentVariables("TODO_");
+builder.Services.AddAkka(builder.Configuration, builder.Environment);
+builder.Services.AddHealthChecks().AddCheck<BasicHealthCheck>("basic").ForwardToPrometheus();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+builder.Services.AddControllers();
+var app = builder.Build();
+app.UseCors(c => c.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+app.UseRewriter(new RewriteOptions().AddRedirect("^$", "swagger"));
+app.UseSwagger();
+app.UseSwaggerUI(ops => ops.EnableTryItOutByDefault());
+app.UseHttpMetrics();
+app.MapMetrics();
+app.MapHealthChecks("/health", new HealthCheckOptions { ResponseWriter = Helper.JsonResponseWriter });
+app.MapControllers();
+app.Run();
