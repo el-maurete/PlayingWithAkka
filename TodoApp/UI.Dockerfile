@@ -7,10 +7,10 @@ RUN dotnet restore Todo.UI/Todo.UI.csproj
 
 COPY ./Todo.UI ./Todo.UI
 COPY ./Todo.Core ./Todo.Core/
-RUN dotnet build Todo.UI/Todo.UI.csproj -c Release
+RUN dotnet build Todo.UI/Todo.UI.csproj -c Release --no-restore
 
 FROM build AS publish
-RUN dotnet publish Todo.UI/Todo.UI.csproj  -c Release -o /app/publish
+RUN dotnet publish Todo.UI/Todo.UI.csproj  -c Release -o /app/publish --no-restore
 
 FROM nginx:latest AS final
 COPY --from=publish /app/publish/wwwroot /usr/share/nginx/html

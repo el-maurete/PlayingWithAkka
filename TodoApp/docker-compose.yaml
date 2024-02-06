@@ -1,21 +1,21 @@
 version: "3.6"
 
 services: 
-  prometheus:
-    build:
-      context: ./prometheus
-    ports:
-      - "9090:9090"
+#  prometheus:
+#    build:
+#      context: ./prometheus
+#    ports:
+#      - "9090:9090"
         
-  grafana:
-    depends_on:
-      - prometheus
-    build:
-      context: ./grafana
-    environment:
-      GF_AUTH_ANONYMOUS_ENABLED: true
-    ports:
-      - "3000:3000"
+#  grafana:
+#    depends_on:
+#      - prometheus
+#    build:
+#      context: ./grafana
+#    environment:
+#      GF_AUTH_ANONYMOUS_ENABLED: true
+#    ports:
+#      - "3000:3000"
   
   db:
     image: postgres:14.2

@@ -7,10 +7,10 @@ RUN dotnet restore Todo.Api/Todo.Api.csproj
 
 COPY ./Todo.Api ./Todo.Api
 COPY ./Todo.Core ./Todo.Core/
-RUN dotnet build Todo.Api/Todo.Api.csproj -c Release
+RUN dotnet build Todo.Api/Todo.Api.csproj -c Release --no-restore
 
 FROM build AS publish
-RUN dotnet publish Todo.Api/Todo.Api.csproj  -c Release -o /app/publish
+RUN dotnet publish Todo.Api/Todo.Api.csproj  -c Release -o /app/publish --no-restore
 
 # Use the base image and copy the published app into it
 FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS runtime

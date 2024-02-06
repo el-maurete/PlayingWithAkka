@@ -12,7 +12,7 @@ public class ApiController : ControllerBase
 
     public ApiController(ActorRegistry registry) => _registry = registry;
 
-    [HttpGet]
+    [HttpGet("list")]
     public async Task<ActionResult<Activity[]>> List()
     {
         using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(5));
@@ -37,7 +37,7 @@ public class ApiController : ControllerBase
         };
     }
 
-    [HttpPut]
+    [HttpGet("{id}")]
     public async Task<ActionResult<Activity>> Read(string id)
     {
         var gateway = await _registry.GetAsync<TodoActor>();
