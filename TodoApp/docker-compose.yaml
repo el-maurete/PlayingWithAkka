@@ -72,6 +72,23 @@ services:
       - "5001:5000"
       - "8111:8111"
 
+  worker_2:
+    depends_on: 
+      - main
+    image: todo_api:latest
+    command:
+      - "dotnet"
+      - "Todo.Host.dll"
+    environment:
+      ASPNETCORE_URLS: "http://+:5000"
+      TODO_DbHost: "db"
+      TODO_SeedHost: "main"
+      TODO_Host: "worker_2"
+      TODO_Port: "8222"
+    ports:
+      - "5002:5000"
+      - "8222:8222"
+
 #networks:
 #  default:
 #    ipam:

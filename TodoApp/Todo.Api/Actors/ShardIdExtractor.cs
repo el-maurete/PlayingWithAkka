@@ -9,8 +9,18 @@ public class ShardIdExtractor : HashCodeMessageExtractor
 
     public override string EntityId(object message)
     {
-        return message is ICommands c
-            ? c.Id
-            : "not-a-command-" + message.GetType();
+        return message switch {
+            ShardingEnvelope se => se.EntityId,
+            ICommands c => c.Id,
+            _ => "not-a-command-" + message.GetType()
+        };
+    }
+
+    public override object EntityMessage(object message)
+    {
+        return message switch {
+            ShardingEnvelope se => se.Message,
+            {} anything => anything
+        };
     }
 }

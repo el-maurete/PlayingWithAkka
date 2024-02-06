@@ -18,21 +18,5 @@
 <button @onclick="AddTodo">Add todo</button>
 
 @code {
-    private readonly List<TodoItem> _todos = new();
-    private string? _newTodo;
-
-    private void AddTodo()
-    {
-        if (!string.IsNullOrWhiteSpace(_newTodo))
-        {
-            _todos.Add(new TodoItem { Title = _newTodo });
-            _newTodo = string.Empty;
-        }
-    }
-
-    record TodoItem
-    {
-        public string? Title { get; set; }
-        public bool IsDone { get; set; }
-    }
+    // Add code here or in the partial class in Todo.razor.cs
 }

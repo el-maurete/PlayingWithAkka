@@ -6,6 +6,8 @@ using Akka.Hosting;
 using Akka.Persistence.Hosting;
 using Akka.Persistence.PostgreSql;
 using Akka.Persistence.PostgreSql.Hosting;
+using Akka.Persistence.Query;
+using Akka.Persistence.Query.Sql;
 using Akka.Remote.Hosting;
 using Todo.Api.Actors;
 
@@ -66,10 +68,12 @@ public static class AkkaSetup
                             StateStoreMode = StateStoreMode.DData,
                             Role = role
                         })
-                    .WithActors((system, registry, resolver) =>
+                    .WithSingleton<ReadModelActor>(nameof(ReadModelActor), (system, registry, resolver) =>
                     {
-                        //registry.TryRegister<CounterActor>(system.ActorOf(resolver.Props<COunterActor>()))
-                    });
+                        var journal = PersistenceQuery.Get(system).ReadJournalFor<SqlReadJournal>(SqlReadJournal.Identifier);
+                        return resolver.Props<ReadModelActor>(journal);                        
+                    }, new ClusterSingletonOptions() { Role = role })
+                    .WithActors((system, registry) => registry.Get<ReadModelActor>());
             });
     }
 

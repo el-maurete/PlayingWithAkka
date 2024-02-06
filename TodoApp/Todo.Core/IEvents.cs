@@ -2,10 +2,7 @@
 
 public interface IEvents
 {
-    public record Event : IEvents;
-
-    public static Event NullEvent = new ();
-
-    public record Created(string Id, string Title) : IEvents;
-    public record Completed(string Id, DateTime CompletedOn) : IEvents;
+    public record Event(string Id) : IEvents;
+    public record Created(string Id, string Title) : Event(Id);
+    public record Completed(string Id, DateTime CompletedOn) : Event(Id);
 }

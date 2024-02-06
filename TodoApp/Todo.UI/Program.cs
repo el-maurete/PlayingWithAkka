@@ -10,7 +10,7 @@ builder.Services.AddSingleton(_ => new HttpClient
 {
     BaseAddress = new Uri(
         Environment.GetEnvironmentVariable("API_URL")
-        ?? "https://localhost:5001")
+        ?? "http://localhost:5000")
 });
 
 await builder.Build().RunAsync();
